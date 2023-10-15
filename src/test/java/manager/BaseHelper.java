@@ -1,8 +1,10 @@
 package manager;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
@@ -14,7 +16,7 @@ public class BaseHelper {
         this.driver = driver;
     }
 
-    private WebElement findElementBase(By locator) {
+    public WebElement findElementBase(By locator) {
         System.out.println(locator);
         return driver.findElement(locator);
     }
@@ -53,4 +55,7 @@ public class BaseHelper {
             return false;
         }
     }
+
+    driver.findElementBase(By.linkText("Wrong email or password")).click();
+    Alert alert = wait.until(ExpectedConditions.alertIsPresent));
 }

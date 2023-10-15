@@ -5,7 +5,7 @@ public class RandomUtils {
 
     Random random = new Random();
 
-    public String generateEmail(int length) {
+    public static String generateEmail(int length) {
         String[] domains = { "gmail.com", "yahoo.com", "outlook.com", "example.com", "domain.com" };
         String domain = domains[random.nextInt(domains.length)];
         return (generateString(length) + "@" + domain);
