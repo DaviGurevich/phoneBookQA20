@@ -1,11 +1,19 @@
 package tests;
 
 import manager.ApplicationManager;
+import manager.TestNGListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Listeners;
 
+
+@Listeners(TestNGListener.class)
 
     public class BaseTest {
+
+    Logger logger = LoggerFactory.getLogger(BaseTest.class);
         static ApplicationManager app = new ApplicationManager();
 
         @BeforeSuite

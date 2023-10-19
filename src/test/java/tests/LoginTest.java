@@ -41,10 +41,49 @@ public class LoginTest extends BaseTest {
                 build();
 
         app.getUserHelper().loginUserDTOLombok(user);
-       String text = alert.getText();
-       Assert.assertEquals(text, "Wrong email or password");
-       alert.accept();
+//       String text = alert.getText();
+        Assert.assertTrue(app.getUserHelper().validateMessageAlert());
+//       alert.accept();
 
     }
 
+    @Test
+    public void negativeLoginUserDTOLombokPasswordIncorrect() {
+        UserDTOLombok user = UserDTOLombok.builder().
+                email("dana@dana@.mail").
+                password("123").
+                build();
+
+        app.getUserHelper().loginUserDTOLombok(user);
+        Assert.assertTrue(app.getUserHelper().validateMessageAlert());
+
+
+    }
+
+    @Test
+    public void negativeLoginUserDTOLombokEmailAndPasswordEmpty() {
+        UserDTOLombok user = UserDTOLombok.builder().
+                email("").
+                password("").
+                build();
+
+        app.getUserHelper().loginUserDTOLombok(user);
+        Assert.assertTrue(app.getUserHelper().validateMessageAlert());
+
+
+    }
+
+    @Test
+    public void negativeLoginUserDTOLombokEmailWithoutAtSign() {
+        UserDTOLombok user = UserDTOLombok.builder().
+                email("dana.com").
+                password("Dana123$%").
+                build();
+
+        app.getUserHelper().loginUserDTOLombok(user);
+        Assert.assertTrue(app.getUserHelper().validateMessageAlert());
+
+
+    }
 }
+

@@ -1,6 +1,7 @@
 package tests;
 
 import dto.UserDTOLombok;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
@@ -11,8 +12,9 @@ public class RegistrationTests extends BaseTest {
 
     @Test
     public void positiveRegistration() {
-        String email = RandomUtils.generateEmail(7);
-        UserDTOLombok user = UserDTOLombok().builder()
+        RandomUtils randomUtils = new RandomUtils();
+        String email = randomUtils.generateEmail(7);
+        UserDTOLombok user = UserDTOLombok.builder()
                 .email(email)
                 .password("12345Qwerty#$&")
                 .build();
@@ -23,17 +25,58 @@ public class RegistrationTests extends BaseTest {
 
     @Test
     public void negativeRegistrationPasswordIncorrect() {
-        String email = RandomUtils.generateEmail(7);
-        UserDTOLombok user = UserDTOLombok().builder()
+        RandomUtils randomUtils = new RandomUtils();
+        String email = randomUtils.generateEmail(7);
+        UserDTOLombok user = UserDTOLombok.builder()
                 .email(email)
                 .password("123")
                 .build();
 
         app.getUserHelper().loginUserDTOLombok(user);
-        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
-        String text = alert.getText();
-        Assert.assertEquals(text, "Wrong email or password format");
-        alert.accept();
+        Assert.assertTrue(app.getUserHelper().validateMessageAlert());
+
+    }
+
+    @Test
+    public void negativeRegistrationEmailIncorrect() {
+        RandomUtils randomUtils = new RandomUtils();
+        String password = randomUtils.generatePassword(10);
+        UserDTOLombok user = UserDTOLombok.builder()
+                .email("dana@1")
+                .password(password)
+                .build();
+
+        app.getUserHelper().loginUserDTOLombok(user);
+        Assert.assertTrue(app.getUserHelper().validateMessageAlertWrongEmailOrPassword());
+
+    }
+
+    @Test
+    public void negativeRegistrationEmailEmpty() {
+        RandomUtils randomUtils = new RandomUtils();
+        String email = randomUtils.generateEmail(7);
+        UserDTOLombok user = UserDTOLombok.builder()
+                .email("")
+                .password("Daba12345$!")
+                .build();
+
+        app.getUserHelper().loginUserDTOLombok(user);
+        Assert.assertTrue(app.getUserHelper().validateMessageAlertWrongEmailOrPassword());
+
+    }
+
+    @Test
+    public void negativeRegistrationPasswordEmpty() {
+        RandomUtils randomUtils = new RandomUtils();
+        String email = randomUtils.generateEmail(7);
+        UserDTOLombok user = UserDTOLombok.builder()
+                .email(email)
+                .password("")
+                .build();
+
+        app.getUserHelper().loginUserDTOLombok(user);
+        Assert.assertTrue(app.getUserHelper().validateMessageAlertWrongEmailOrPassword());
+
     }
 
 }

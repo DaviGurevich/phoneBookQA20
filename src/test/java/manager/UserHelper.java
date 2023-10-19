@@ -56,4 +56,34 @@ public class UserHelper extends BaseHelper {
         return isTextEqual(messageSuccessLogin, "CONTACTS");
     }
 
+    public boolean validateMessageAlert() {
+        String expectedResult = "Wrong email or password".toUpperCase();
+        String actualResult = getTextAlert();
+        return isTextEqualGet2Strings(expectedResult, actualResult);
+
+    }
+
+    public boolean validateMessageAlertWrongEmailOrPassword() {
+        String expectedResult = "WRONG EMAIL OR PASSWORD FORMAT\n" +
+                "            EMAIL MUST CONTAINS ONE @ AND MINIMUM 2 SYMBOLS AFTER LAST DOT\n" +
+                "            PASSWORD MUST CONTAIN AT LEAST ONE UPPERCASE LETTER!\n" +
+                "            PASSWORD MUST CONTAIN AT LEAST ONE LOWERCASE LETTER!\n" +
+                "            PASSWORD MUST CONTAIN AT LEAST ONE DIGIT!\n" +
+                "            PASSWORD MUST CONTAIN AT LEAST ONE SPECIAL SYMBOL FROM [‘$’,’~’,’-‘,’_’]!";
+        String actualResult = getTextAlert();
+        return isTextEqualGet2Strings(expectedResult, actualResult);
+    }
+
+    public boolean isTextEqualGet2Strings(String expectedResult, String actualResult) {
+        if (expectedResult.equals(actualResult)) {
+            return true;
+        }else{
+            System.out.println("Expected result: " + expectedResult + "Actual result" + actualResult);
+            return false;
+        }
+    }
 }
+
+
+
+

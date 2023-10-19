@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -56,6 +57,24 @@ public class BaseHelper {
         }
     }
 
-    driver.findElementBase(By.linkText("Wrong email or password")).click();
-    Alert alert = wait.until(ExpectedConditions.alertIsPresent));
+    public String getTextAlert() {
+ //       driver.findElementBase(By.linkText("Wrong email or password")).click();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        return alert.getText().toUpperCase().trim();
+    }
+
+
+
+    public boolean isTextEqualGet2Strings(String expectedResult, String actualResult) {
+        if(expectedResult.equals(actualResult)) {
+            return true;
+        } else {
+            System.out.println("expected result: " + expectedResult +
+                    "actual result: " + actualResult);
+            return false;
+        }
+    }
+
+
 }
